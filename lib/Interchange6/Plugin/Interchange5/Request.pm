@@ -3,10 +3,11 @@ package Interchange6::Plugin::Interchange5::Request;
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
+use Moo;
 
 =head1 NAME
 
-Interchange6::Plugin::Interchange5::Request - The great new Interchange6::Plugin::Interchange5::Request!
+Interchange6::Plugin::Interchange5::Request - Mimic Dancer::Request inside IC5
 
 =head1 VERSION
 
@@ -21,33 +22,136 @@ our $VERSION = '0.01';
 
 Quick summary of what the module does.
 
-Perhaps a little code snippet.
+In a tag (shipped as dancer_request.tag)
 
     use Interchange6::Plugin::Interchange5::Request;
-
-    my $foo = Interchange6::Plugin::Interchange5::Request->new();
+    my %env = %{::http()->{env}};
+    return Interchange6::Plugin::Interchange5::Request->new(env => \%env);
     ...
 
-=head1 EXPORT
+Somewhere else
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+    my $req = $Tag->dancer_request;
+    $req->header('Accept-Language');
+    $req->accept_language;
+    ....
 
-=head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head1 ACCESSORS
 
-=cut
-
-sub function1 {
-}
-
-=head2 function2
+=head2 env
 
 =cut
 
-sub function2 {
+has env => (is => 'ro',
+            required => 1,
+            isa => sub {
+                die unless ref($_[0]) eq 'HASH';
+            });
+
+=head1 METHODS
+
+=head2 environment($name)
+
+Look into the environment variables, with the following routine:
+first, we uppercase the name and replace any non-alpha and non-digit
+character with the underscore. Then we look into the environment. If
+not found, we try to prepend HTTP_. Return undef in nothing is found.
+
+=cut
+
+sub environment {
+    my ($self, $name) = @_;
+    return unless $name;
+    $name =~ s/[^a-zA-Z0-9_]/_/g;
+    $name = uc($name);
+    my $http_name = "HTTP_" . $name;
+    my $env = $self->env;
+    if (exists $env->{$name}) {
+        return $env->{$name};
+    }
+    elsif (exists $env->{$http_name}) {
+        return $env->{$http_name};
+    }
+    else {
+        return;
+    }
 }
+
+
+=head2 SHORTCUTS
+
+The following methods are just shortcuts for the C<environment> method.
+
+=over 4
+
+=item  accept
+
+=item  accept_charset
+
+=item  accept_encoding
+
+=item  accept_language
+
+=item  accept_type
+
+=item  agent (alias for "user_agent")
+
+=item  connection
+
+=item  forwarded_for_address
+
+=item  forwarded_protocol
+
+=item  forwarded_host
+
+=item  host
+
+=item  keep_alive
+
+=item  path_info
+
+=item  referer
+
+=item  remote_address
+
+=item  user_agent
+
+=back
+
+=cut
+
+sub accept { return shift->environment("accept") }
+
+sub accept_charset { return shift->environment("accept_charset") }
+
+sub accept_encoding { return shift->environment("accept_encoding") }
+
+sub accept_language { return shift->environment("accept_language") }
+
+sub accept_type { return shift->environment("accept_type") }
+
+sub agent { return shift->environment("user_agent") }
+
+sub connection { return shift->environment("connection") }
+
+sub forwarded_for_address { return shift->environment("forwarded_for_address") }
+
+sub forwarded_protocol { return shift->environment("forwarded_protocol") }
+
+sub forwarded_host { return shift->environment("forwarded_host") }
+
+sub host { return shift->environment("host") }
+
+sub keep_alive { return shift->environment("keep_alive") }
+
+sub path_info { return shift->environment("path_info") }
+
+sub referer { return shift->environment("referer") }
+
+sub remote_address { return shift->environment("remote_addr") }
+
+sub user_agent { return shift->environment("user_agent") }
 
 =head1 AUTHOR
 

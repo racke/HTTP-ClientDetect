@@ -17,6 +17,7 @@ WriteMakefile(
     BUILD_REQUIRES => {
         'Test::More' => 0,
         'Moo' => 0,
+        'Geo::IP::PurePerl' => 0, # but Geo::IP will do OK too
     },
     PREREQ_PM => {
         #'ABC'              => 1.6,

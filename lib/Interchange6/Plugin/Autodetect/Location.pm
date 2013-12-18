@@ -3,10 +3,12 @@ package Interchange6::Plugin::Autodetect::Location;
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
+use Module::Load;
+use Moo;
 
 =head1 NAME
 
-Interchange6::Plugin::Autodetect::Location - The great new Interchange6::Plugin::Autodetect::Location!
+Interchange6::Plugin::Autodetect::Location - Lookup the country of the client using Geo::IP
 
 =head1 VERSION
 
@@ -19,35 +21,65 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
     use Interchange6::Plugin::Autodetect::Location;
+    my $geo = Interchange6::Plugin::Autodetect::Location->new(db => "/path/to/geo-ip");
+    # inside a Dancer route
+    get '/detect' => sub {
+        my $req = request;
+        my $country_code = $geo->country_code($req);
+    }
 
-    my $foo = Interchange6::Plugin::Autodetect::Location->new();
-    ...
 
-=head1 EXPORT
+=head1 ACCESSORS
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+=head2 db
+
+Path to the geoip database, which can be retrieved from
+http://dev.maxmind.com/geoip/legacy/geolite/
+
+C<db> must be passed to the constructor.
+
+=cut
+
+has db => (is => 'ro',
+           required => 1,
+           isa => sub {
+               die "db is not a file" unless -f $_[0];
+           });
+
+
+=head2 geo
+
+This accessor wraps L<Geo::IP> or L<Geo::IP::PurePerl>. Calling
+$geo->geo will return an instantiated object, and you can call, e.g.
+C<$geo->geo->country_code_by_addr("128.31.0.51")> or
+C<$geo->geo->country_code_by_name("linuxia.de")>.
+
+=cut
+
+has geo => (is => 'rwp',
+            builder => 1);
+
+sub _build_geo {
+    my $self = shift;
+    my $module = "Geo::IP";
+    eval {
+        load $module;
+    };
+    if ($@) {
+        $module .= "::PurePerl";
+        # if we die here too bad
+        load $module;
+    }
+    my $gi = $module->open($self->db);
+    return $gi;
+}
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 
 
 =cut
-
-sub function1 {
-}
-
-=head2 function2
-
-=cut
-
-sub function2 {
-}
 
 =head1 AUTHOR
 

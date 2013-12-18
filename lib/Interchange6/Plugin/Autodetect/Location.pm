@@ -77,9 +77,34 @@ sub _build_geo {
 
 =head1 SUBROUTINES/METHODS
 
-=head2 
+=head2 request_country($request_obj)
+
+Return the country of the request. The request should be a string with
+the ip or L<Dancer::Request> object (or something that respond to the
+method "remote_address").
 
 =cut
+
+sub request_country {
+    my ($self, $arg) = @_;
+    my $ip;
+    if (ref($arg)) {
+        if ($arg->can("remote_address")) {
+            $ip = $arg->remote_address;
+        }
+    }
+    else {
+        $ip = $arg;
+    }
+    return unless $ip;
+    if ($ip =~ m/(([0-9]{1,3}\.){3}([0-9]{1,3}))/) {
+        $ip = $1;
+        return $self->geo->country_code_by_addr($ip);
+    }
+    else {
+        return;
+    }
+}
 
 =head1 AUTHOR
 

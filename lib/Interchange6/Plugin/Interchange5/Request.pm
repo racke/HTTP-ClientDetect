@@ -58,7 +58,16 @@ first, we uppercase the name and replace any non-alpha and non-digit
 character with the underscore. Then we look into the environment. If
 not found, we try to prepend HTTP_. Return undef in nothing is found.
 
+=head2 header($name)
+
+Alias for environment
+
 =cut
+
+sub header {
+    my ($self, $name) = @_;
+    return $self->environment($name);
+}
 
 sub environment {
     my ($self, $name) = @_;

@@ -1,4 +1,4 @@
-Interchange6-Plugin-Autodetect
+HTTP-ClientDetect
 
 The README is used to introduce the module and provide instructions on
 how to install the module, any machine dependencies it may have (for
@@ -26,21 +26,21 @@ SUPPORT AND DOCUMENTATION
 After installing, you can find documentation for this module with the
 perldoc command.
 
-    perldoc Interchange6::Plugin::Autodetect
+    perldoc HTTP::ClientDetect
 
 You can also look for information at:
 
     RT, CPAN's request tracker (report bugs here)
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Interchange6-Plugin-Autodetect
+        http://rt.cpan.org/NoAuth/Bugs.html?Dist=HTTP-ClientDetect
 
     AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/Interchange6-Plugin-Autodetect
+        http://annocpan.org/dist/HTTP-ClientDetect
 
     CPAN Ratings
-        http://cpanratings.perl.org/d/Interchange6-Plugin-Autodetect
+        http://cpanratings.perl.org/d/HTTP-ClientDetect
 
     Search CPAN
-        http://search.cpan.org/dist/Interchange6-Plugin-Autodetect/
+        http://search.cpan.org/dist/HTTP-ClientDetect/
 
 
 LICENSE AND COPYRIGHT

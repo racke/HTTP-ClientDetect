@@ -3,7 +3,7 @@
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
-use Test::More tests => 10;
+use Test::More tests => 20;
 use File::Spec;
 use Data::Dumper;
 
@@ -36,4 +36,7 @@ foreach my $string (keys %test_strings) {
     my $request = Interchange6::Plugin::Interchange5::Request->new(env => $env);
     my $result = $lang_detect->language($request);
     is $result, $expected, "Expected $expected from $string, got $result";
+    my $short_name = $expected;
+    $short_name =~ s/^(.*)_(.*)$/$1/;
+    is $lang_detect->language_short($request), $short_name, "Short name $short_name OK";
 }

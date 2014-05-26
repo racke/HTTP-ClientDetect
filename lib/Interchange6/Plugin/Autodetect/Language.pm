@@ -140,6 +140,22 @@ sub language {
     return shift(@ordered)->[0];
 }
 
+=head3 language_short($request_obj)
+
+Return the short language version (i.e.), the language name without
+the country part.
+
+=cut
+
+sub language_short {
+    my ($self, $obj) = @_;
+    my $lang = $self->language($obj);
+    # strip the second part
+    $lang =~ s/_.*$//;
+    return $lang;
+}
+
+
 =head3 check_language_name
 
 Returns a normalized version of the language name, lower case for the

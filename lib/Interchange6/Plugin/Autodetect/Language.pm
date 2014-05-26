@@ -48,8 +48,33 @@ C<en_US>. This will be always returned if the lookup fails
 =cut
 
 
-has server_default => (is => 'ro',
-                       default => sub { return "en_US" });
+has server_default => (is => 'rw',
+                       default => sub { return "en_US" },
+                       isa => sub {
+                           die "Bad language $_[0]\n"
+                             unless __PACKAGE__->check_language_name($_[0]);
+                       });
+
+
+=head2 available_languages
+
+Accessor to an arrayref of languages available on the server side.
+Please use the short version (C<de>, not C<de_DE>), otherwise the
+check will be too restrictive.
+
+=cut
+
+has available_languages => (is => 'rw',
+                            isa => sub {
+                                my $aref = $_[0];
+                                die "Not an arrayref" unless ref($aref) eq 'ARRAY';
+                                foreach my $l (@$aref) {
+                                    die "Bad language $l\n"
+                                      unless __PACKAGE__->check_language_name($l);
+                                }
+                            },
+                            default => sub { [] },
+                           );
 
 
 =head1 SUBROUTINES/METHODS
@@ -110,6 +135,33 @@ From L<http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>:
 
 sub language {
     my ($self, $obj) = @_;
+    my @browser_langs = $self->browser_languages($obj);
+    my @avail = @{$self->available_languages};
+    if (@avail) {
+        foreach my $ua_lang (@browser_langs) {
+            foreach my $avail_lang (@avail) {
+                if ($ua_lang =~ m/^\Q$avail_lang\E(_[A-Z]+)?$/) {
+                    return $ua_lang;
+                }
+            }
+        }
+        # nothing? then return the server default
+        return $self->server_default;
+    }
+    else {
+        return $browser_langs[0];
+    }
+}
+
+=head2 browser_languages($request)
+
+This method returns the parsed and sorted list of language preferences
+set in the browser, when the first element has higher priority.
+
+=cut
+
+sub browser_languages {
+    my ($self, $obj) = @_;
     return $self->server_default unless $obj;
     my $accept_str;
     if ($obj->can("accept_language")) {
@@ -137,7 +189,7 @@ sub language {
     }
     return $self->server_default unless @to_order;
     my @ordered = sort { $b->[1] <=> $a->[1] } @to_order;
-    return shift(@ordered)->[0];
+    return map { $_->[0] } @ordered;
 }
 
 =head3 language_short($request_obj)
@@ -194,8 +246,9 @@ sub check_language_name {
     if ($countrs{$lang}) {
         return $lang . "_" . uc($lang);
     }
-    # if we are still here, return nothing
-    return;
+    # if we are still here, return the language, there are cases we
+    # can't catch, like ja_JP
+    return $lang;
 }
 
 

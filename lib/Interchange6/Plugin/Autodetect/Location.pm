@@ -89,8 +89,13 @@ sub request_country {
     my ($self, $arg) = @_;
     my $ip;
     if (ref($arg)) {
+        # Dancer
         if ($arg->can("remote_address")) {
             $ip = $arg->remote_address;
+        }
+        # Catalyst
+        elsif ($arg->can("address")) {
+            $ip = $arg->address;
         }
     }
     else {

@@ -1,5 +1,5 @@
 # This tag returns a (kind of) compatible object for the purposes of
-# the Interchange6::Plugin::Autodetect package
+# the HTTP::ClientDetect package
 
 Usertag dancer_request Routine <<EOR
 use Interchange6::Plugin::Interchange5::Request;

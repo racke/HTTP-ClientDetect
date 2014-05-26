@@ -1,4 +1,4 @@
-package Interchange6::Plugin::Autodetect::Language;
+package HTTP::ClientDetect::Language;
 
 use 5.006;
 use strict;
@@ -16,7 +16,7 @@ my %countrs  = map { $_ => 1 } @countries;
 
 =head1 NAME
 
-Interchange6::Plugin::Autodetect::Language - Lookup the client's preferred language
+HTTP::ClientDetect::Language - Lookup the client's preferred language
 
 =head1 VERSION
 
@@ -29,8 +29,8 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-    use Interchange6::Plugin::Autodetect::Language;
-    my $lang_detect = Interchange6::Plugin::Autodetect::Language->new(server_default => "en_US");
+    use HTTP::ClientDetect::Language;
+    my $lang_detect = HTTP::ClientDetect::Language->new(server_default => "en_US");
     # inside a Dancer route
     get '/detect' => sub {
         my $req = request;
@@ -269,7 +269,7 @@ automatically be notified of progress on your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc Interchange6::Plugin::Autodetect::Language
+    perldoc HTTP::ClientDetect::Language
 
 
 You can also look for information at:
@@ -311,4 +311,4 @@ See L<http://dev.perl.org/licenses/> for more information.
 
 =cut
 
-1; # End of Interchange6::Plugin::Autodetect::Language
+1; # End of HTTP::ClientDetect::Language

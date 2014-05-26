@@ -10,10 +10,10 @@ use Data::Dumper;
 # fake a request
 
 use Interchange6::Plugin::Interchange5::Request;
-use Interchange6::Plugin::Autodetect::Language;
+use HTTP::ClientDetect::Language;
 
 
-my $lang_detect = Interchange6::Plugin::Autodetect::Language->new(server_default => "hr_HR");
+my $lang_detect = HTTP::ClientDetect::Language->new(server_default => "hr_HR");
 
 my %test_strings = (
                     'en,en-us;q=0.7,it;q=0.3' => 'en_US',
@@ -62,7 +62,7 @@ foreach my $string (keys %test_strings) {
  ja \t   ;  \t   q \t =  \t  0.3, da;q=1.\t\t\t,  de;q=0." => 'hr',
                     'en;q=0.4, ja;q=0.3, ja;q=0.45, en;q=0.42, ja;q=0.1' => 'hr',
                 );
-$lang_detect = Interchange6::Plugin::Autodetect::Language
+$lang_detect = HTTP::ClientDetect::Language
   ->new(server_default => "hr",
         available_languages => [qw/it hr/]
        );

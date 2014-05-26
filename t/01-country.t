@@ -10,7 +10,7 @@ use Data::Dumper;
 # fake a request
 
 use Interchange6::Plugin::Interchange5::Request;
-use Interchange6::Plugin::Autodetect::Location;
+use HTTP::ClientDetect::Location;
 
 
 my $env = {
@@ -20,7 +20,7 @@ my $request = Interchange6::Plugin::Interchange5::Request->new(env => $env);
 
 my $dbfile = File::Spec->catfile(t => 'GeoIP.dat');
 
-my $geo = Interchange6::Plugin::Autodetect::Location->new(db => $dbfile);
+my $geo = HTTP::ClientDetect::Location->new(db => $dbfile);
 
 # testing if geo_ip works calling it.
 

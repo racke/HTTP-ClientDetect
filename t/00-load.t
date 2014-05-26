@@ -7,10 +7,10 @@ use Test::More;
 plan tests => 4;
 
 BEGIN {
-    use_ok( 'Interchange6::Plugin::Autodetect' ) || print "Bail out!\n";
-    use_ok( 'Interchange6::Plugin::Autodetect::Language' ) || print "Bail out!\n";
-    use_ok( 'Interchange6::Plugin::Autodetect::Location' ) || print "Bail out!\n";
+    use_ok( 'HTTP::ClientDetect' ) || print "Bail out!\n";
+    use_ok( 'HTTP::ClientDetect::Language' ) || print "Bail out!\n";
+    use_ok( 'HTTP::ClientDetect::Location' ) || print "Bail out!\n";
     use_ok( 'Interchange6::Plugin::Interchange5::Request' ) || print "Bail out!\n";
 }
 
-diag( "Testing Interchange6::Plugin::Autodetect $Interchange6::Plugin::Autodetect::VERSION, Perl $], $^X" );
+diag( "Testing HTTP::ClientDetect $HTTP::ClientDetect::VERSION, Perl $], $^X" );

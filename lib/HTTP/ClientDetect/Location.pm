@@ -1,4 +1,4 @@
-package Interchange6::Plugin::Autodetect::Location;
+package HTTP::ClientDetect::Location;
 
 use 5.006;
 use strict;
@@ -8,7 +8,7 @@ use Moo;
 
 =head1 NAME
 
-Interchange6::Plugin::Autodetect::Location - Lookup the country of the client using Geo::IP
+HTTP::ClientDetect::Location - Lookup the country of the client using Geo::IP
 
 =head1 VERSION
 
@@ -21,8 +21,8 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-    use Interchange6::Plugin::Autodetect::Location;
-    my $geo = Interchange6::Plugin::Autodetect::Location->new(db => "/path/to/geo-ip");
+    use HTTP::ClientDetect::Location;
+    my $geo = HTTP::ClientDetect::Location->new(db => "/path/to/geo-ip");
     # inside a Dancer route
     get '/detect' => sub {
         my $req = request;
@@ -128,7 +128,7 @@ automatically be notified of progress on your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc Interchange6::Plugin::Autodetect::Location
+    perldoc HTTP::ClientDetect::Location
 
 
 You can also look for information at:
@@ -170,4 +170,4 @@ See L<http://dev.perl.org/licenses/> for more information.
 
 =cut
 
-1; # End of Interchange6::Plugin::Autodetect::Location
+1; # End of HTTP::ClientDetect::Location

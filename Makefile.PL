@@ -4,10 +4,10 @@ use warnings FATAL => 'all';
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME             => 'Interchange6::Plugin::Autodetect',
+    NAME             => 'HTTP::ClientDetect',
     AUTHOR           => q{Marco Pessotto <melmothx@gmail.com>},
-    VERSION_FROM     => 'lib/Interchange6/Plugin/Autodetect.pm',
-    ABSTRACT_FROM    => 'lib/Interchange6/Plugin/Autodetect.pm',
+    VERSION_FROM     => 'lib/HTTP/ClientDetect.pm',
+    ABSTRACT_FROM    => 'lib/HTTP/ClientDetect.pm',
     LICENSE          => 'Perl_5',
     PL_FILES         => {},
     MIN_PERL_VERSION => 5.006,
@@ -24,5 +24,5 @@ WriteMakefile(
         #'Foo::Bar::Module' => 5.0401,
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean => { FILES => 'Interchange6-Plugin-Autodetect-*' },
+    clean => { FILES => 'HTTP-ClientDetect-*' },
 );

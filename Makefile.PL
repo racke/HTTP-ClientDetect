@@ -20,8 +20,8 @@ WriteMakefile(
         'Geo::IP::PurePerl' => 0, # but Geo::IP will do OK too
     },
     PREREQ_PM => {
-        #'ABC'              => 1.6,
-        #'Foo::Bar::Module' => 5.0401,
+        'Locale::Language' => 0,
+        'Locale::Country' => 0,
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'HTTP-ClientDetect-*' },

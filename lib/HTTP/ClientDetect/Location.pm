@@ -12,11 +12,11 @@ HTTP::ClientDetect::Location - Lookup the country of the client using Geo::IP
 
 =head1 VERSION
 
-Version 0.01
+Version 0.03
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.03';
 
 
 =head1 SYNOPSIS

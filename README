@@ -2,7 +2,7 @@ NAME
     HTTP::ClientDetect - Detect language and location of an HTTP request
 
 VERSION
-    Version 0.02
+    Version 0.03
 
 SYNOPSIS
       use HTTP::ClientDetect::Location;

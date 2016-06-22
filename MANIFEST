@@ -9,6 +9,7 @@ README
 t/00-load.t
 t/01-country.t
 t/02-lang.t
+t/accessors.t
 t/GeoIP.dat
 t/manifest.t
 t/pod-coverage.t
